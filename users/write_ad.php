@@ -49,9 +49,10 @@ if (mysqli_num_rows($order_result)==0) {
 		$order_page = 'select.php';
 	}
 	?>
+    <div class='container'>
 <h1><?php echo $label['no_order_in_progress']; ?></h1>
 <p><?php echo $label['no_order_in_progress_go_here'] = str_replace ('%ORDER_PAGE%', $order_page ,  $label['no_order_in_progress_go_here']); //echo $label['no_order_in_progress_go_here']; ?></p>
-
+</div>
 	<?php
 	require ("footer.php");
 	die();

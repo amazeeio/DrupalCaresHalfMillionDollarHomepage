@@ -112,7 +112,7 @@ function login_form( $show_signup_link = true, $target_page = 'index.php' ) {
 
     <div class="row mt-4">
         <div class="col-md-6">
-    <a class="btn btn-light btn-block" href='forgot.php'><?php echo $label["advertiser_pass_forgotten"]; ?></a>
+    <a class="btn btn-light btn-block mb-3" href='forgot.php'><?php echo $label["advertiser_pass_forgotten"]; ?></a>
         </div>
     <?php if ( $show_signup_link ) { ?>
                 <div class="col-md-6">

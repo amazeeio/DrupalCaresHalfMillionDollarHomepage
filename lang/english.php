@@ -805,8 +805,7 @@ URLS:<br>
 
 ';
 $label['mouseover_ad_template']='%ALT_TEXT%<br>
-<font color="green">%URL%</font><br>
-';
+<font color="green">%URL%</font><br>';
 $label['advertiser_select_instructions2']='<h3>Instructions:</h3>
 <p>
 Each square represents a block of %PIXEL_C% pixels (%BLK_WIDTH%x%BLK_HEIGHT%). Select the blocks that you want, and then press the \'Redeem Pixels Now\' button.<br><br>

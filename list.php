@@ -40,7 +40,7 @@ include_once( MDSROOT . "/html/header.php" );
 
 global $label;
 ?>
-<div class="container">
+<div class="container px-0">
 
 <?php include( MDSROOT . "/top_ads_js.php" ); ?>
 <?php include( 'mouseover_box.htm' ); ?>
