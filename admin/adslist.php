@@ -29,11 +29,6 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start([
-	'name' => 'MDSADMIN_PHPSESSID',
-]);
-
 require ('../config.php');
 
 require ("admin_common.php");
@@ -307,4 +302,3 @@ global $tag_to_field_id;
 
 	?>
 </table>
-

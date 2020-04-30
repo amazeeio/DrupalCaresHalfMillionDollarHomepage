@@ -29,12 +29,11 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start([
+require_once ('../config.php');
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
-require_once ('../config.php');
-
 
 ?>
 
