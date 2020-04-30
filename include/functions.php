@@ -129,7 +129,7 @@ function expire_orders() {
 
 		// Delete Temp Orders
 
-		$session_duration = intval( ini_get( "session.gc_maxlifetime" ) );
+		$session_duration = 3600;
 
 		$sql = "SELECT session_id, order_date FROM `temp_orders` WHERE  DATE_SUB('$now', INTERVAL $session_duration SECOND) >= temp_orders.order_date AND session_id <> '" . mysqli_real_escape_string( $GLOBALS['connection'], session_id() ) . "' ";
 
