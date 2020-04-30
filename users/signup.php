@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
-require "../config.php";
 
+require "../config.php";
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 ?>
 
 <?php include('login_functions.php'); ?>
@@ -56,7 +56,7 @@ You should have received a copy of the GNU General Public License
 along with the Million Dollar Script.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-
+	
 echo $f2->get_doc();
 
 require ("header.php");
@@ -77,20 +77,20 @@ $label["advertiser_signup_heading1"] = str_replace ("%SITE_NAME%", SITE_NAME , $
 				if ($_REQUEST['form']=="filled") {
 
 					$success = process_signup_form();
-
+					
 				} // end submit
 
 				if (!$success) {
 					//Signup form is shown below
 
 					display_signup_form($_REQUEST['FirstName'], $_REQUEST['LastName'], $_REQUEST['CompName'], $_REQUEST['Username'], $_REQUEST['Password'], $_REQUEST['Password2'], $_REQUEST['Email'], $_REQUEST['Newsletter'], $_REQUEST['Notification1'], $_REQUEST['Notification2'], $_REQUEST['lang']);
-
+					
 				} else {
 
 
 				}
 
-
+				
 			?>
 
 		</td>

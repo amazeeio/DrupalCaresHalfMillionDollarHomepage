@@ -29,12 +29,12 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
+
 define( 'NO_HOUSE_KEEP', 'YES' );
 
 require( "../config.php" );
-
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 require_once( "../include/output_grid.php" );
 
 $BID = ( isset( $_REQUEST['BID'] ) && $f2->bid( $_REQUEST['BID'] ) != '' ) ? $f2->bid( $_REQUEST['BID'] ) : 1;

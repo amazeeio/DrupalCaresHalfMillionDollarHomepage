@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
-require ("../config.php");
 
+require ("../config.php");
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 
 $now = (gmdate("Y-m-d H:i:s"));
 $sql = "UPDATE `users` SET `logout_date`='$now' WHERE `Username`='".mysqli_real_escape_string( $GLOBALS['connection'], $_SESSION['MDS_Username'])."'";

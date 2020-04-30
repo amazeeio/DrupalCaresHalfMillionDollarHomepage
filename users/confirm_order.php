@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
 include ("../config.php");
 
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 require_once ("../include/ads.inc.php");
 
 $BID = $f2->bid(isset($_REQUEST['BID']) ? $_REQUEST['BID'] : 1);

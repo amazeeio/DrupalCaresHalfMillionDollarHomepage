@@ -30,12 +30,12 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
+
 define( 'NO_HOUSE_KEEP', 'YES' );
 // check the image selection.
 require( "../config.php" );
-
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 header( "Cache-Control: no-cache, must-revalidate" ); // HTTP/1.1
 header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); // Date in the past
 
@@ -130,7 +130,7 @@ function reserve_temp_order_pixels( $block_info, $in_str ) {
 }
 
 #######################################################################
-## MAIN
+## MAIN 
 #######################################################################
 // return true, or false if the image can fit
 

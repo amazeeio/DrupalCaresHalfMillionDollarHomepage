@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
-require_once( __DIR__ . "/../config.php" );
 
+require_once( __DIR__ . "/../config.php" );
+require_once __DIR__ . '/../include/session.php';
+$db_sessions = new DBSessionHandler();
 require_once( __DIR__ . "/login_functions.php" );
 
 process_login();

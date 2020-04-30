@@ -28,10 +28,10 @@
  *        https://milliondollarscript.com/
  *
  */
-session_save_path('/app/files/sessions/');
-session_start();
-require "../config.php";
 
+require "../config.php";
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 include( 'login_functions.php' );
 /*
 COPYRIGHT 2008 - see www.milliondollarscript.com for a list of authors

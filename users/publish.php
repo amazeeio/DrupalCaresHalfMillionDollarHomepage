@@ -32,10 +32,10 @@
 use Imagine\Filter\Basic\Autorotate;
 
 @set_time_limit ( 260);
-session_save_path('/app/files/sessions/');
-session_start();
-include ("../config.php");
 
+include ("../config.php");
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 include ("login_functions.php");
 require_once ("../include/ads.inc.php");
 
@@ -53,7 +53,7 @@ echo "<div class='container'>";
 
 if ($f2->bid($_REQUEST['BID'])!='') {
 	$BID = $f2->bid($_REQUEST['BID']);
-
+	
 } elseif (isset($_REQUEST['ad_id']) && !empty($_REQUEST['ad_id'])) {
 	$sql = "select banner_id from ads where ad_id='".intval($_REQUEST['ad_id'])."'";
 	$res = mysqli_query($GLOBALS['connection'], $sql);
@@ -62,7 +62,7 @@ if ($f2->bid($_REQUEST['BID'])!='') {
 } else {
 	// get the banner_id of one if the blocks the customer owns
 	//$sql = "SELECT DISTINCT(blocks.banner_id) as banner_id, name FROM blocks, banners where blocks.banner_id=banners.banner_id AND user_id='".$_SESSION['MDS_ID']."' and (status='sold' or status='expired') LIMIT 1";
-
+	
 	$sql = "select *, banners.banner_id AS BID FROM orders, banners where orders.banner_id=banners.banner_id  AND user_id=".intval($_SESSION['MDS_ID'])." and (orders.status='completed' or status='expired') group by orders.banner_id order by orders.banner_id ";
 
 	$res = mysqli_query($GLOBALS['connection'], $sql);
@@ -116,13 +116,13 @@ if ($_REQUEST['action']=='complete') {
 
 			?>
 			<h1><?php echo $label['sorry_head']; ?></h1>
-			<p><?php
+			<p><?php 
 			if (USE_AJAX=='SIMPLE') {
 				$order_page = 'order_pixels.php';
 			} else {
 				$order_page = 'select.php';
 			}
-			$label['sorry_head2'] = str_replace ('%ORDER_PAGE%', $order_page , $label['sorry_head2']);
+			$label['sorry_head2'] = str_replace ('%ORDER_PAGE%', $order_page , $label['sorry_head2']);	
 			echo $label['sorry_head2'];?></p>
 			<?php
 			require ("footer.php");
@@ -146,7 +146,7 @@ if ($_REQUEST['action']=='complete') {
 		process_image($BID);
 		publish_image($BID);
 		process_map($BID);
-
+		
 	}
 
 }
@@ -174,13 +174,13 @@ if (mysqli_num_rows($res)>1) {
 	<?php display_banner_selecton_form($BID, $_SESSION['MDS_order_id'], $res); ?>
 	</p>
 	<?php
-
-}
+		
+} 
 
 
 #####################################################
 # A block was clicked. Fetch the ad_id and initialize $_REQUEST['ad_id']
-# If no ad exists for this block, create it.
+# If no ad exists for this block, create it. 
 
 if (isset($_REQUEST['block_id']) && !empty($_REQUEST['block_id'])) {
 
@@ -229,7 +229,7 @@ if (isset($_REQUEST['block_id']) && !empty($_REQUEST['block_id'])) {
 
 			$_REQUEST['ad_id'] = $ad_id;
 		} else {
-
+		
 			$_REQUEST['ad_id'] = $blk_row['ad_id'];
 
 		}
@@ -238,11 +238,11 @@ if (isset($_REQUEST['block_id']) && !empty($_REQUEST['block_id'])) {
 		$sql = "UPDATE ads SET user_id='".intval($blk_row['user_id'])."' WHERE order_id='".intval($blk_row['order_id'])."' AND user_id <> '".intval($_SESSION['MDS_ID'])."' limit 1 ";
 		mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']));
 
-
+		
 
 
 	}
-
+	
 
 }
 //////////////
@@ -485,7 +485,7 @@ if (isset($_REQUEST['ad_id']) && !empty($_REQUEST['ad_id'])) {
 
 			$ad_id = insert_ad_data();
 			update_blocks_with_ad($ad_id, $_SESSION['MDS_ID']);
-
+			
 			global $prams;
 			$prams = load_ad_values ($ad_id);
 			//print_r($prams);
@@ -496,7 +496,7 @@ if (isset($_REQUEST['ad_id']) && !empty($_REQUEST['ad_id'])) {
 			<?php
 
 			$mode = "user";
-
+		
 			display_ad_form (1, $mode, $prams);
 
 			// disapprove the pixels because the ad was modified..
@@ -504,7 +504,7 @@ if (isset($_REQUEST['ad_id']) && !empty($_REQUEST['ad_id'])) {
 			if ($banner_data['AUTO_APPROVE']!='Y') { // to be approved by the admin
 				disapprove_modified_order($prams['order_id'], $BID);
 			}
-
+			
 			if ($banner_data['AUTO_PUBLISH']=='Y') {
 				process_image($BID);
 				publish_image($BID);
@@ -520,13 +520,13 @@ if (isset($_REQUEST['ad_id']) && !empty($_REQUEST['ad_id'])) {
 		}
 
 	} else {
-
+			
 			$prams = load_ad_values ($_REQUEST['ad_id']);
 			display_ad_form (1, 'user', $prams);
 
 	}
 
-
+	
 
 } # end of ad forms
 ?>&nbsp;</p><?php
@@ -550,7 +550,7 @@ if ($count > 0) {
 	<?php
 
 }
-
+		
 //}
 
 ?>
@@ -558,13 +558,13 @@ if ($count > 0) {
 	<p>
 	<?php echo $label['advertiser_publish_instructions2']; ?>
 	<?php
-
+	
 	// infrom the user about the approval status of the iamges.
 
 	$sql = "select * from orders where user_id='".intval($_SESSION['MDS_ID'])."' AND status='completed' and  approved='N' and banner_id='".intval($BID)."' ";
-	$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']));
+	$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection'])); 
 
-	if (mysqli_num_rows($result4)>0) {
+	if (mysqli_num_rows($result4)>0) {	
 		?>
 		<p><div width='100%' style="border-color:#FF9797; border-style:solid;padding:5px;"><?php echo $label['advertiser_publish_pixwait']; ?></div></p>
 		<?php
@@ -572,19 +572,19 @@ if ($count > 0) {
 
 		$sql = "select * from orders where user_id='".intval($_SESSION['MDS_ID'])."' AND status='completed' and  approved='Y' and published='Y' and banner_id='".intval($BID)."' ";
 		//echo $sql;
-		$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']));
+		$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection'])); 
 
-		if (mysqli_num_rows($result4)>0) {
+		if (mysqli_num_rows($result4)>0) {	
 			?>
 			<p><div width='100%' style="border-color:green;border-style:solid;padding:5px;"><?php echo $label['advertiser_publish_published']; ?></div></p>
 			<?php
 		} else {
 
 			$sql = "select * from orders where user_id='".intval($_SESSION['MDS_ID'])."' AND status='completed' and  approved='Y' and published='N' and banner_id='".intval($BID)."' ";
+			
+			$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection'])); 
 
-			$result4 = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']));
-
-			if (mysqli_num_rows($result4)>0) {
+			if (mysqli_num_rows($result4)>0) {	
 				?>
 				<p><div width='100%' style="border-color:yellow;border-style:solid;padding:5px;"><?php echo $label['advertiser_publish_waiting']; ?></div></p>
 				<?php
@@ -594,7 +594,7 @@ if ($count > 0) {
 
 	}
 
-
+	
 
 
 	?>

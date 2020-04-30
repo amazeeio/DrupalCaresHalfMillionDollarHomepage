@@ -29,15 +29,14 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
 define( 'NO_HOUSE_KEEP', 'YES' );
 
 header( "Cache-Control: no-cache, must-revalidate" ); // HTTP/1.1
 header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); // Date in the past
 
 require_once( "../config.php" );
-
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 $block_id      = intval( $_REQUEST['block_id'] );
 $BID           = $f2->bid( $_REQUEST['BID'] );
 $output_result = "";

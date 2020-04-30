@@ -28,8 +28,6 @@
  * 		https://milliondollarscript.com/
  *
  */
-session_save_path('/app/files/sessions/');
-session_start();
 
 /*
 
@@ -40,6 +38,9 @@ get ad
 */
 define ('NO_HOUSE_KEEP', 'YES');
 require ('config.php');
+
+require_once 'include/session.php';
+$db_sessions = new DBSessionHandler();
 
 require_once ('include/ads.inc.php');
 

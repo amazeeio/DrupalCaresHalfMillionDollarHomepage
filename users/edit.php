@@ -29,10 +29,9 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
 include ("../config.php");
-
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 include ("login_functions.php");
 
 process_login();
@@ -156,6 +155,3 @@ $email = $row['Email'];
 require ("footer.php");
 
 ?>
-
-
-

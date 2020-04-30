@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
-include( "../config.php" );
 
+include( "../config.php" );
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 include( "login_functions.php" );
 
 process_login();
@@ -904,7 +904,7 @@ if ( ! $tmp_image_file ) {
 		$pixel_count                     = $size[0] * $size[1];
 		$block_size                      = $pixel_count / ( $banner_data['BLK_WIDTH'] * $banner_data['BLK_HEIGHT'] );
 		$block_size_5 = $block_size * 5;
-        echo "<p>The uploaded image will require <span class='badge badge-secondary'>$pixel_count</span>
+        echo "<p>The uploaded image will require <span class='badge badge-secondary'>$pixel_count</span> 
             pixels from the map which is a donation amount of <span class='badge badge-secondary'>$block_size_5 $/€</span>.</p>";
 
         // Attempt to load current voucher amount.

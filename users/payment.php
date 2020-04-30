@@ -29,10 +29,10 @@
  *
  */
 
-session_save_path('/app/files/sessions/');
-session_start();
-include ("../config.php");
 
+include ("../config.php");
+require_once '../include/session.php';
+$db_sessions = new DBSessionHandler();
 include ("login_functions.php");
 $BID = 1; # Banner ID. Change this later & allow users to select multiple banners
 $sql = "select * from banners where banner_id='$BID'";
