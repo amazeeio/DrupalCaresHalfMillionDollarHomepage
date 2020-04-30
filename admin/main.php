@@ -1006,6 +1006,19 @@ function does_field_exist($table, $field) {
 
 	}
 
+	if (!does_field_exist("sessions", "id")) {
+
+		$sql = "CREATE TABLE `sessions` (
+			`id` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+			`access` int(10) NOT NULL,
+			`data` text COLLATE utf8mb4_bin NOT NULL,
+			UNIQUE KEY `id` (`id`)
+		) CHARACTER SET=utf8mb4 COLLATE=utf8mb4_bin";
+
+		mysqli_query($GLOBALS['connection'], $sql) or die ("<p><b>CANNOT UPGRADE YOUR DATABASE!<br>" . mysqli_error($GLOBALS['connection']) . "<br>Please run the following query manually from PhpMyAdmin:</b><br><pre>$sql</pre><br>");
+
+	}
+
 	// Password md5 -> bcrypt migration.
     if (getSizeOfColumn('users', 'Password') != 64) {
         $sql = "ALTER TABLE `users` MODIFY `Password` VARCHAR(64);";
