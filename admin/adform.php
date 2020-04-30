@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
@@ -123,8 +124,8 @@ if ($save != '') {
 }
 
 if ($_REQUEST['delete'] != '') {
-	
-	
+
+
 	echo "Deleting...";
 	$sql = "SELECT * FROM form_fields WHERE form_id=1 and field_id='".intval($_REQUEST['field_id'])."'";
 	$result = mysqli_query($GLOBALS['connection'], $sql);

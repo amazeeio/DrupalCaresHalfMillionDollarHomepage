@@ -28,7 +28,7 @@
  * 		https://milliondollarscript.com/
  *
  */
-
+session_save_path('/app/files/sessions/');
 session_start();
 
 /*
@@ -44,7 +44,7 @@ require ('config.php');
 require_once ('include/ads.inc.php');
 
 $AID = $_REQUEST['AID'];
-//$BID = $f2->bid($_REQUEST['BID']); 
+//$BID = $f2->bid($_REQUEST['BID']);
 
 $prams = load_ad_values ($AID);
 

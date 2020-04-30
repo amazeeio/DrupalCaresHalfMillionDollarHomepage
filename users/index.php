@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 include ("../config.php");
 
@@ -74,7 +75,7 @@ $label['advertiser_home_blkonorder'] = str_replace("%PIXEL_ORD_COUNT%", $ordered
 
 if (USE_AJAX=='SIMPLE') {
 	$label['advertiser_home_blkonorder'] = str_replace('select.php', 'order_pixels.php', $label['advertiser_home_blkonorder']);
-} 
+}
 echo $label['advertiser_home_blkonorder']."<br>";
 
 $label['advertiser_home_click_count'] = str_replace("%CLICK_COUNT%", number_format($user_row['click_count']), $label['advertiser_home_click_count']);
@@ -84,11 +85,11 @@ echo $label['advertiser_home_click_count']."<br>";
 
 <h3><?php echo $label['advertiser_home_sub_head']; ?></h3>
 <p>
-<?php 
+<?php
 
 if (USE_AJAX=='SIMPLE') {
 	$label['advertiser_home_selectlink'] = str_replace('select.php', 'order_pixels.php', $label['advertiser_home_selectlink']);
-} 
+}
 
 echo $label['advertiser_home_selectlink']; ?><br>
 <?php echo $label['advertiser_home_managelink']; ?><br>

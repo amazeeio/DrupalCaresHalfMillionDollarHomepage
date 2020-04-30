@@ -4,7 +4,7 @@ tasks:
   post-rollout:
     - run:
         name: create upload folders
-        command: mkdir -p files/upload_files && mkdir -p files/upload_files/images && mkdir -p files/upload_files/docs && mkdir -p files/pixels
+        command: mkdir -p files/upload_files && mkdir -p files/upload_files/images && mkdir -p files/upload_files/docs && mkdir -p files/pixels && mkdir -p files/sessions
         service: nginx
 
 environments:

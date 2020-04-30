@@ -28,6 +28,7 @@
  *        https://milliondollarscript.com/
  *
  */
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);

@@ -38,6 +38,7 @@ if ( ! is_logged_in() ) {
 	}
 }
 
+session_save_path('/app/files/sessions/');
 session_start();
 require __DIR__ . "/../config.php";
 

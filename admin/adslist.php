@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
@@ -71,7 +72,7 @@ $mode = $_REQUEST['mode'];
 <BODY style=" font-family: 'Arial', sans-serif; font-size:10pt; background: #fff; ">
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000; "></div>
 <b>[Ads List]</b><span style="background-color: <?php if (($_REQUEST['mode']!='edit')) { echo "#F2F2F2"; }  ?>; border-style:outset; padding: 5px;"><a href="adform.php?mode=view">View Form</a></span> <span style="background-color:  <?php if (($_REQUEST['mode']=='edit') && ($_REQUEST['NEW_FIELD']=='')) { echo "#FFFFCC"; }  ?>; border-style:outset; padding: 5px;"><a href="adform.php?mode=edit">Edit Fields</a></span> <span style="background-color: <?php if (($_REQUEST['mode']=='edit') && ($_REQUEST['NEW_FIELD']!='')) { echo "#FFFFCC"; }  else { echo "#F2F2F2";}?> ; border-style:outset; padding: 5px;"><a href="adform.php?NEW_FIELD=YES&mode=edit">New Field</a></span> &nbsp; &nbsp; <span style="background-color: <?php  echo "#FFFFCC";?> ; border-style:outset; padding: 5px;"><a href="adslist.php">Ads List</a></span>
-	
+
 	<hr>
 
 <?php
@@ -140,7 +141,7 @@ if ($_REQUEST['save_col']!='') {
 			case 'banner_id':
 				$field_row['template_tag']='BID';
 				break;
-			
+
 
 		}
 
@@ -169,7 +170,7 @@ if ($_REQUEST['save_col']!='') {
 
 	$sql = "REPLACE INTO form_lists (`column_id`, `template_tag`, `field_id`, `sort_order`, `field_type`, `form_id`, `admin`, `truncate_length`, `linked`, `clean_format`, `is_bold`, `no_wrap`, `is_sortable`) VALUES ('".intval($_REQUEST['column_id'])."', '".mysqli_real_escape_string( $GLOBALS['connection'],$field_row['template_tag'])."', '".intval($field_row['field_id'])."', '".mysqli_real_escape_string( $GLOBALS['connection'],$_REQUEST['sort_order'])."', '".mysqli_real_escape_string( $GLOBALS['connection'], $field_row['field_type'])."', '1', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['admin_only'])."', '".intval($_REQUEST['truncate_length'])."', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['linked'])."',  '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['clean_format'])."', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['is_bold'])."', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['no_wrap'])."', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['is_sortable'])."')";
 
-	
+
 	if ($error=='') {
 		$result = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']).$sql);
 		echo "Column Updated.<br>";
@@ -223,12 +224,12 @@ if ($col_row['column_id']=='') {
 		<td>Column</td>
 		<td><select name="field_id" size=4>
 
-		
-		
+
+
 		<?php
-		
+
 		field_type_option_list (1, $col_row['field_id']);
-		
+
 		?>
 			</select></td>
 	</tr>

@@ -31,7 +31,8 @@
 
 try {
 
-	session_start();
+	session_save_path('/app/files/sessions/');
+session_start();
 	define( 'NO_HOUSE_KEEP', 'YES' );
 
 	require( '../config.php' );

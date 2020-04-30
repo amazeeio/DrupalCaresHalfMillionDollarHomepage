@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 include ("../config.php");
 
@@ -89,7 +90,7 @@ if ( isset( $_REQUEST['cancel'] ) && $_REQUEST['cancel'] == 'yes' && isset( $_RE
 
 function confirmLink(theLink, theConfirmMsg)
    {
-      
+
        if (theConfirmMsg == '') {
            return true;
        }
@@ -170,9 +171,9 @@ usort( $orders, "date_sort" );
 					$sql = "select * from banners where banner_id=".intval($order['banner_id']);
 			$b_result = mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']).$sql);
 			$b_row = mysqli_fetch_array($b_result);
-		
+
 			echo $b_row['name'];
-			
+
 		?></td>
 			<td><?php echo convert_to_default_currency_formatted($order['currency'], $order['price']); ?></td>
 			<td><?php
@@ -209,7 +210,7 @@ usort( $orders, "date_sort" );
 
 				$elapsed_time = strtotime(gmdate('r')) - $time_start;
 				$elapsed_days = floor ($elapsed_time / 60 / 60 / 24);
-				
+
 				$exp_time =  ($order['days_expire']  * 24 * 60 * 60);
 
 				$exp_time_to_go = $exp_time - $elapsed_time;
@@ -239,7 +240,7 @@ usort( $orders, "date_sort" );
 			$sql = "select order_id from orders where (status = 'renew_paid' OR status = 'renew_wait') AND original_order_id='".intval($order['original_order_id'])."' ";
 			$res_c = mysqli_query($GLOBALS['connection'], $sql);
 			if (mysqli_num_rows($res_c)==0) {
- 
+
 				$label['advertiser_ord_renew'] = str_replace("%DAYS_TO_RENEW%", $days, $label['advertiser_ord_renew']);
 				echo "<a href='payment.php?order_id=".$order['order_id']."&BID=".$order['banner_id']."'><span class='text-danger'><small>(".$label['advertiser_ord_renew'].")</small></span></a>";
 			}

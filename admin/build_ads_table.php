@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
@@ -85,12 +86,12 @@ foreach ($fields as $key=>$val) {
 	}
 
 	# If exists in both, do nothing
-	if (($columns[$key] != '') && 
+	if (($columns[$key] != '') &&
 		($fields[$key]['field_id'] != '')) { // do nothing
 
 	}
 	# If exists in form but not table, add to table
-	if (($columns[$key] == '') && 
+	if (($columns[$key] == '') &&
 		($fields[$key]['field_id'] != '')) { // ADD to table
 		if ($i>0) {$sql .= ", ";}
 		$sql .= add_field ($key, $fields[$key]['field_type']);
@@ -109,13 +110,13 @@ foreach ($columns as $key=>$val) {
 	}
 
 	# If exists in both, do nothing
-	if (($columns[$key] != '') && 
+	if (($columns[$key] != '') &&
 		($fields[$key]['field_id'] != '')) { // do nothing
 
 	}
-	
-	# if NOT exists form, but is in table, 
-	if (($columns[$key] != '') && 
+
+	# if NOT exists form, but is in table,
+	if (($columns[$key] != '') &&
 		($fields[$key]['field_id'] == '')) { // REMOVE from table
 		if ($i>0) {$sql .= ", ";}
 		$sql .= remove_field($key);
@@ -126,7 +127,7 @@ foreach ($columns as $key=>$val) {
 }
 
 if ($change == 'Y') {
-	
+
 	echo "<br />";
 	mysqli_query($GLOBALS['connection'], $sql) or die ("SQL: ".$sql."  ERROR: ".mysqli_error($GLOBALS['connection']));
 
@@ -139,7 +140,7 @@ if ($change == 'Y') {
 
 
 function add_field ($field_id, $field_type) {
-	
+
 	return " ADD `$field_id` ".get_definition($field_type)." ";
 
 }

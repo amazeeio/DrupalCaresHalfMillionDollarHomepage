@@ -31,6 +31,7 @@
 
 use Imagine\Filter\Basic\Autorotate;
 
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
@@ -304,7 +305,7 @@ if ( isset($_REQUEST['ad_id']) && is_numeric( $_REQUEST['ad_id'] ) ) {
 <td valign="top"><b><?php echo $label['adv_pub_piximg']; ?></b><br>
 <center>
 <?php
-if ($_REQUEST['ad_id']!='') { 
+if ($_REQUEST['ad_id']!='') {
 		//echo "ad is".$_REQUEST['ad_id'];
 		?><img src="get_order_image.php?BID=<?php echo $BID; ?>&aid=<?php echo $_REQUEST['ad_id']; ?>" border=1><?php
 	} else {
@@ -313,7 +314,7 @@ if ($_REQUEST['ad_id']!='') {
 </center>
 </td>
 <td valign="top"><b><?php echo $label['adv_pub_pixinfo']; ?></b><br><?php
-			
+
 		$label['adv_pub_pixcount'] = str_replace('%SIZE_X%',$size['x'],$label['adv_pub_pixcount']);
 		$label['adv_pub_pixcount'] = str_replace('%SIZE_Y%', $size['y'],$label['adv_pub_pixcount']);
 		$label['adv_pub_pixcount'] = str_replace('%PIXEL_COUNT%', $pixels,$label['adv_pub_pixcount']);
@@ -338,7 +339,7 @@ if ($_REQUEST['ad_id']!='') {
 
 
 	if ($_REQUEST['save'] != "" ) { // saving
-	
+
 		$error = validate_ad_data(1);
 		if ($error != '') { // we have an error
 			display_ad_form (1, "user", '');
@@ -352,7 +353,7 @@ if ($_REQUEST['ad_id']!='') {
 			if ($banner_data['AUTO_APPROVE']!='Y') { // to be approved by the admin
 				disapprove_modified_order($prams['order_id'], $BID);
 			}
-			
+
 			if ($banner_data['AUTO_PUBLISH']=='Y') {
 				process_image($BID);
 				publish_image($BID);
@@ -372,8 +373,8 @@ if ($_REQUEST['ad_id']!='') {
 	$sql = "select * FROM users where ID='".intval($prams['user_id'])."' ";
 	$result = mysqli_query($GLOBALS['connection'], $sql);
 	$u_row = mysqli_fetch_array($result);
-	
-	
+
+
 	$b_row = load_banner_row($prams['banner_id']);
 	?>
 
@@ -385,7 +386,7 @@ if ($_REQUEST['ad_id']!='') {
 
 	<?php
 	echo '<hr>';
-	
+
 } else {
 
 	// select banner id
@@ -406,7 +407,7 @@ $res = mysqli_query($GLOBALS['connection'], $sql);
 		<option> </option>
 		<?php
 		while ($row=mysqli_fetch_array($res)) {
-			
+
 			if (($row['banner_id']==$BID) && ($BID!='all')) {
 				$sel = 'selected';
 			} else {

@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 include ("../config.php");
 
@@ -60,7 +61,7 @@ if ($has_packages && $_REQUEST['pack']!='') {
 		$quantity = $row['quantity'];
 
 		$block_count = $quantity / ($banner_data['block_width'] * $banner_data['block_height'] );
-		
+
 		// Now update the order (overwrite the total & days_expire with the package)
 		$pack = get_package($_REQUEST['pack']);
 		$total = $pack['price'] * $block_count;
@@ -119,7 +120,7 @@ if (($order_row['order_id']=='') || (($order_row['quantity']=='0'))) {
 	$label['order_min_blocks_req'] = str_replace('%MIN_BLOCKS%', $banner_data['G_MIN_BLOCKS'], $label['order_min_blocks_req']);
 	echo "<p>".$label['order_min_blocks_req']."</p>";
 	display_edit_order_button ($_SESSION['MDS_order_id']);
-	
+
 } else {
 
 	if (($has_packages) && ($_REQUEST['pack']=='')) {
@@ -158,14 +159,14 @@ if (($order_row['order_id']=='') || (($order_row['quantity']=='0'))) {
 
 		if (($order_row['price']==0) || ($u_row['Rank']==2)) {
 			?>
-			<input type='button' value="<?php echo $label['advertiser_o_completebutton']; ?>" Onclick="window.location='publish.php?action=complete&order_id=<?php echo $order_row['order_id'];?>&BID=<?php echo $BID; ?>&order_id=<?php echo $order_row['order_id'];?>'"> 
+			<input type='button' value="<?php echo $label['advertiser_o_completebutton']; ?>" Onclick="window.location='publish.php?action=complete&order_id=<?php echo $order_row['order_id'];?>&BID=<?php echo $BID; ?>&order_id=<?php echo $order_row['order_id'];?>'">
 				<?php
 		} else {
-		
+
 			?>
-			<input type='button' value="<?php echo $label['advertiser_o_confpay_button']; ?>" Onclick="window.location='payment.php?action=confirm&order_id=<?php echo $order_row['order_id'];?>&BID=<?php echo $BID; ?>'">  
+			<input type='button' value="<?php echo $label['advertiser_o_confpay_button']; ?>" Onclick="window.location='payment.php?action=confirm&order_id=<?php echo $order_row['order_id'];?>&BID=<?php echo $BID; ?>'">
 			<hr>
-			<?php  
+			<?php
 		}
 	}
 }

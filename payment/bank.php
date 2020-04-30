@@ -36,8 +36,8 @@ define (IPN_LOGGING, 'Y');
 
 function b_mail_error($msg) {
 
-	$date = date("D, j M Y H:i:s O"); 
-	
+	$date = date("D, j M Y H:i:s O");
+
 	$headers = "From: ". SITE_CONTACT_EMAIL ."\r\n";
 	$headers .= "Reply-To: ".SITE_CONTACT_EMAIL ."\r\n";
 	$headers .= "Return-Path: ".SITE_CONTACT_EMAIL ."\r\n";
@@ -53,9 +53,9 @@ function b_log_entry ($entry_line) {
 
 	if (IPN_LOGGING == 'Y') {
 
-		$entry_line =  "BANK:$entry_line\r\n "; 
-		$log_fp = fopen("logs.txt", "a"); 
-		fputs($log_fp, $entry_line); 
+		$entry_line =  "BANK:$entry_line\r\n ";
+		$log_fp = fopen("logs.txt", "a");
+		fputs($log_fp, $entry_line);
 		fclose($log_fp);
 
 	}
@@ -133,7 +133,7 @@ class bank {
 
 
 
-		
+
 
 	}
 
@@ -164,8 +164,8 @@ class bank {
 		$sql = "DELETE FROM config where `key`='BANK_EMAIL_CONFIRM'";
 		mysqli_query($GLOBALS['connection'], $sql);
 
-	
-		
+
+
 
 
 
@@ -178,15 +178,15 @@ class bank {
 		$sql = "SELECT * from orders where order_id='".intval($order_id)."'";
 		$result = mysqli_query($GLOBALS['connection'], $sql) or die(mysqli_error($GLOBALS['connection']).$sql);
 		$order_row = mysqli_fetch_array($result);
-	
-				
+
+
 			?>
 			<center>
-			
+
 			<input type="button" value="<?php echo $label['payment_bank_button']; ?>" onclick="window.location='<?php echo BASE_HTTP_PATH."users/thanks.php?m=".$this->className."&order_id=".$order_row['order_id']."&nhezk5=3"; ?>'">
 			</center>
 
-			
+
 
 	<?php
 
@@ -195,7 +195,7 @@ class bank {
 	function config_form() {
 
 		if ($_REQUEST['action']=='save') {
-		
+
 			$bank_name = $_REQUEST['bank_name'];
 			$bank_address = $_REQUEST['bank_address'];
 			$bank_account_name = $_REQUEST['bank_account_name'];
@@ -213,15 +213,15 @@ class bank {
 			$bank_swift = BANK_SWIFT;
 			$bank_currency = BANK_CURRENCY;
 			$bank_email_confirm = BANK_EMAIL_CONFIRM;
-		
+
 		}
 
-		
+
 		?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 		 <table border="0" cellpadding="5" cellspacing="2" style="border-style:groove" id="AutoNumber1" width="100%" bgcolor="#FFFFFF">
 
-		 
+
      <tr>
       <td colspan="2"  bgcolor="#e6f2ea">
       <font face="Verdana" size="1"><b>Bank Payment Settings</b><br>(If you leave any field field blank, then it will not show up on the checkout)</font></td>
@@ -241,7 +241,7 @@ class bank {
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">
       <input type="text" name="bank_account_name" size="29" value="<?php echo $bank_account_name; ?>"></font></td>
     </tr>
-	
+
     <tr>
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">Bank Account Number</font></td>
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">
@@ -257,7 +257,7 @@ class bank {
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">
       <input type="text" name="bank_swift" size="29" value="<?php echo $bank_swift; ?>"></font></td>
     </tr>
-	
+
 	<tr>
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">Bank Account Currency</font></td>
       <td  bgcolor="#e6f2ea"><font face="Verdana" size="1">
@@ -272,14 +272,14 @@ class bank {
     </tr>
 	-->
      <tr>
-	
+
       <td  bgcolor="#e6f2ea" colspan=2><font face="Verdana" size="1"><input type="submit" value="Save">
 	  </td>
 	  </tr>
   </table>
   <input type="hidden" name="pay" value="<?php echo $_REQUEST['pay'];?>">
   <input type="hidden" name="action" value="save">
-  
+
 </form>
 
 		<?php
@@ -288,7 +288,7 @@ class bank {
 
 	function save_config() {
 
-		
+
 		$sql = "REPLACE INTO config (`key`, val) VALUES ('BANK_NAME', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['bank_name'])."')";
 		mysqli_query($GLOBALS['connection'], $sql) or die (mysqli_error($GLOBALS['connection']).$sql);
 		$sql = "REPLACE INTO config (`key`, val) VALUES ('BANK_ADDRESS', '".mysqli_real_escape_string( $GLOBALS['connection'], $_REQUEST['bank_address'])."')";
@@ -365,7 +365,8 @@ class bank {
 
 		if (($_REQUEST['order_id']!='') && ($_REQUEST['nhezk5']!='')) {
 
-			//session_start();
+			//session_save_path('/app/files/sessions/');
+session_start();
 
 			//print_r($_SESSION);
 
@@ -385,7 +386,7 @@ class bank {
 				$result = mysqli_query($GLOBALS['connection'], $sql) or die(mysqli_error($GLOBALS['connection']).$sql);
 				$order_row = mysqli_fetch_array($result);
 
-					
+
 				$bank_amount = convert_to_currency($order_row['price'], $order_row['currency'], BANK_CURRENCY);
 				$bank_amount = format_currency($bank_amount, BANK_CURRENCY, true);
 
@@ -393,11 +394,11 @@ class bank {
 				$label['payment_bank_note'] = str_replace ("%CONTACT_EMAIL%", SITE_CONTACT_EMAIL, $label['payment_bank_note']);
 				$label['payment_bank_note'] = str_replace ("%INVOICE_CODE%", $_REQUEST['order_id'], $label['payment_bank_note']);
 
-				if (get_default_currency()  != BANK_CURRENCY) {	
+				if (get_default_currency()  != BANK_CURRENCY) {
 					echo convert_to_default_currency_formatted($order_row[currency], $order_row['price'])." = ".$bank_amount;
 					echo "<br>";
 				}?>
-				
+
 				<table width="70%"><tr><td>
 				<b><?php echo $label['payment_bank_heading'];?></b><br>
 				<?php if ( BANK_NAME != '') { ?>
@@ -423,10 +424,10 @@ class bank {
 					<?php echo $label['payment_bank_note'];?>
 					</td></tr>
 					</table>
-					
+
 					</p>
 					</center>
-					
+
 					</div>
 					<?php
 

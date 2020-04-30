@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 require_once( __DIR__ . "/../config.php" );
 

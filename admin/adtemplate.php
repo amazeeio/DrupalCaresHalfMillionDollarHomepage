@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start([
 	'name' => 'MDSADMIN_PHPSESSID',
 ]);
@@ -64,7 +65,7 @@ require_once ("../include/ads.inc.php");
 <body style=" font-family: 'Arial', sans-serif; font-size:10pt; background: #fff  url( <?php echo BASE_HTTP_PATH;?>images/grgrad.gif) repeat-x; ">
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000; "></div>
 <b>[Ads Template] </b><span style="background-color: <?php if (($_REQUEST['mode']!='edit')) { echo "#FFFFff"; }  ?>; border-style:outset; padding: 5px;"><a href="adform.php?mode=view">View Form</a></span> <span style="background-color:  <?php if (($_REQUEST['mode']=='edit') && ($_REQUEST['NEW_FIELD']=='')) { echo "#FFFFCC"; }  ?>; border-style:outset; padding: 5px;"><a href="adform.php?mode=edit">Edit Fields</a></span> <span style="background-color: <?php if (($_REQUEST['mode']=='edit') && ($_REQUEST['NEW_FIELD']!='')) { echo "#FFFFCC"; }  ?>; border-style:outset; padding: 5px;"><a href="adform.php?NEW_FIELD=YES&mode=edit">New Field</a></span>&nbsp; &nbsp; <span style="background-color: <?php  echo "#ffffcc";?> ; border-style:outset; padding: 5px;"><a href="adtemplate.php">Edit Template</a></span> <span style="background-color: <?php  echo "#F2F2F2";?> ; border-style:outset; padding: 5px;"><a href="adslist.php">Ad List</a></span>
-	
+
 	<hr>
 	Here you can edit the template for the ads. The ads are displayed when a mouse is moved over the pixels. <b>You will need to edit this template after inserting or removing a field on the Ad Form.</b><p>The rules are simple... if you want <b>to display to the value of a field, put two % signs around the field's template tag</b>, like this %TEMPLATE_TAG%. If you want <b>to display the field's label, put two $ signs around the field's template tag</b>, like this $TEMPLATE_TAG$.  Use normal HTML to format the ad.</p>
 
@@ -110,7 +111,7 @@ if (($_REQUEST['save'])) {
 
 	// save the file.
 
-	
+
 	include ("../lang/english_default.php");
 	$source_label = $label; // default english labels
 	include ("../lang/".$lang_filename);
@@ -125,7 +126,7 @@ if (($_REQUEST['save'])) {
 		$source_label[$key] = str_replace("'", "\'",$dest_label[$key] ); // slash it
 		$out .= "\$label['$key']='". $source_label[$key]."'; \n";
 	}
-	$out .= "?>\n"; 
+	$out .= "?>\n";
 
 	//echo $out;
 

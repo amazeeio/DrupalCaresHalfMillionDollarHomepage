@@ -30,6 +30,7 @@
  */
 
 @set_time_limit ( 260 );
+session_save_path('/app/files/sessions/');
 session_start();
 if (isset($_REQUEST['order_id'])) {
 	$_SESSION['MDS_order_id'] = $_REQUEST['order_id'];
@@ -58,7 +59,7 @@ process_login();
 
 $sql = "select * from temp_orders where session_id='".mysqli_real_escape_string( $GLOBALS['connection'], session_id())."' ";
 $order_result = mysqli_query($GLOBALS['connection'], $sql) or die(mysqli_error($GLOBALS['connection']));
-	
+
 
 if (mysqli_num_rows($order_result)==0) { // no order id found...
 require ("header.php");
@@ -106,13 +107,13 @@ if (($_REQUEST['action']=='confirm') || (($_REQUEST['action']=='complete'))){
 
 			?>
 			<h1><?php echo $label['sorry_head']; ?></h1>
-			<p><?php 
+			<p><?php
 			if (USE_AJAX=='SIMPLE') {
 				$order_page = 'order_pixels.php';
 			} else {
 				$order_page = 'select.php';
 			}
-			$label['sorry_head2'] = str_replace ('%ORDER_PAGE%', $order_page , $label['sorry_head2']);	
+			$label['sorry_head2'] = str_replace ('%ORDER_PAGE%', $order_page , $label['sorry_head2']);
 			echo $label['sorry_head2'];?></p>
 			<?php
 			require ("footer.php");

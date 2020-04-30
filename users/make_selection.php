@@ -30,6 +30,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 define( 'NO_HOUSE_KEEP', 'YES' );
 // check the image selection.
@@ -129,7 +130,7 @@ function reserve_temp_order_pixels( $block_info, $in_str ) {
 }
 
 #######################################################################
-## MAIN 
+## MAIN
 #######################################################################
 // return true, or false if the image can fit
 

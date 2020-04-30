@@ -29,6 +29,7 @@
  *
  */
 
+session_save_path('/app/files/sessions/');
 session_start();
 define( 'NO_HOUSE_KEEP', 'YES' );
 // check the image selection.
@@ -103,7 +104,7 @@ function check_pixels( $in_str ) {
 }
 
 #######################################################################
-## MAIN 
+## MAIN
 #######################################################################
 // return true, or false if the image can fit
 
